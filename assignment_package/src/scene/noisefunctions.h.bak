@@ -1,0 +1,91 @@
+///
+/// Noise Functions
+///
+/// Perlin is based on Perlin Simplex noise
+///   with testing this was by far the quickest compared to
+///   lecture notes code and other online Perlin code
+/// Both Perlin and Fractal Perlin based on
+///   https://github.com/SRombauts/SimplexNoise
+///
+/// Worley and FBM based on lecture notes
+///
+
+#pragma once
+
+#include <cstddef>  // size_t
+#include "glm_includes.h"
+
+
+/**
+ * @brief A Perlin Simplex Noise C++ Implementation (1D, 2D, 3D, 4D).
+ */
+class NoiseFunctions {
+public:
+    // noise1D() w/ frag from notes
+    // Returns random num range [0,1]
+    float random1( glm::vec2 p );
+    // noise2D
+    glm::vec2 random2( glm::vec2 p );
+    // noise3D
+    glm::vec3 random3from2( glm::vec2 p );
+    // Quintic interp smoothing function
+    float mySmootherStep(float a, float b, float t);
+    glm::vec2 rotate(glm::vec2 p, float deg);
+    // Bilinear interpolation using Quintic interp smoothing function
+    float bilerpNoise(glm::vec2 uv);
+    // Linear interpolation using LERP
+    float interpNoise1D(float x);
+
+    // 1D Perlin simplex noise
+    static float Perlin(float x);
+    // 2D Perlin simplex noise
+    static float Perlin(float x, float y);
+    // 3D Perlin simplex noise
+    static float Perlin(float x, float y, float z);
+
+    // Fractal/Fractional Brownian Motion (fBm) noise summation
+    float fractalPerlin(size_t octaves, float x) const;
+    float fractalPerlin(size_t octaves, float x, float y) const;
+    float fractalPerlin(size_t octaves, float x, float y, float z) const;
+
+    // Perlin smoothstep increases contrast of the Perlin noise function
+    // use for biome choosing
+    float PerlinSmoothStep(float x, float y);
+    float PerlinSmoothStep(float x, float y, float z);
+
+    // Worley noise
+    float WorleyNoise(float x, float y);
+
+    // 1D Fractal Brownian Motion (fbm) with LERP
+    float fBm(size_t octaves, float x);
+    // 2D Fractal Brownian Motion (fbm) with quintic 2D interpolation
+    float fBm(size_t octaves, float x, float y);
+
+    float classPerlinNoise3D(float x, float y, float z);
+    float surflet(glm::vec3 p, glm::vec3 gridPoint);
+
+    /**
+     * Constructor of to initialize a fractal noise summation
+     *
+     * @param[in] frequency    Frequency ("width") of the first octave of noise (default to 1.0)
+     * @param[in] amplitude    Amplitude ("height") of the first octave of noise (default to 1.0)
+     * @param[in] lacunarity   Lacunarity specifies the frequency multiplier between successive octaves (default to 2.0).
+     * @param[in] persistence  Persistence is the loss of amplitude between successive octaves (usually 1/lacunarity)
+     */
+    explicit NoiseFunctions(float frequency = 1.0f,
+                          float amplitude = 1.0f,
+                          float lacunarity = 2.0f,
+                          float persistence = 0.5f) :
+        mFrequency(frequency),
+        mAmplitude(amplitude),
+        mLacunarity(lacunarity),
+        mPersistence(persistence) {
+    }
+
+private:
+    // Parameters of Fractional Brownian Motion (fBm) : sum of N "octaves" of noise
+    float mFrequency;   ///< Frequency ("width") of the first octave of noise (default to 1.0)
+    float mAmplitude;   ///< Amplitude ("height") of the first octave of noise (default to 1.0)
+    float mLacunarity;  ///< Lacunarity specifies the frequency multiplier between successive octaves (default to 2.0).
+    float mPersistence; ///< Persistence is the loss of amplitude between successive octaves (usually 1/lacunarity)
+};

@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>sounds/buzzer.wav</file>
+        <file>sounds/blockbreak.wav</file>
+        <file>sounds/blockplace.wav</file>
+        <file>sounds/bombfall.wav</file>
+        <file>sounds/craft.wav</file>
+        <file>sounds/explode.wav</file>
+        <file>sounds/gupta.wav</file>
+        <file>sounds/water.wav</file>
+        <file>sounds/rajiv.wav</file>
+        <file>sounds/walking.wav</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>SwordMinecraft.obj</file>
+        <file>falcon.obj</file>
+        <file>MineCraft_Character.obj</file>
+        <file>3d-model.obj</file>
+        <file>planeSimplify.obj</file>
+    </qresource>
+</RCC>
